@@ -102,7 +102,37 @@ namespace bandasproject
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_genero_banda;
+        protected global::System.Web.UI.WebControls.TextBox txt_generos_banda;
+
+        /// <summary>
+        /// Control btn_guardar_banda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+
+        protected global::System.Web.UI.WebControls.TextBox txt_contrasena_usuario;
+
+        /// <summary>
+        /// Control btn_guardar_banda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+
+        protected global::System.Web.UI.WebControls.TextBox txt_slogan_banda;
+
+        /// <summary>
+        /// Control btn_guardar_banda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        
+        protected global::System.Web.UI.WebControls.TextBox txt_numero_integrantes_banda;
 
         /// <summary>
         /// Control btn_guardar_banda.

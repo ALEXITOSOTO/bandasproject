@@ -40,7 +40,7 @@
                         <asp:Label ID="lbl_telefono_usuario" runat="server" Text="Teléfono:" Font-Bold="True"></asp:Label>
                         <asp:TextBox ID="txt_telefono_usuario" runat="server" placeholder="Ej. 0991234567" CssClass="form-control mb-3" ReadOnly="False"></asp:TextBox>
 
-                        <asp:Label ID="lbl_contrasena_usuario" runat="server" Text="Contraseña:" Font-Bold="True"></asp:Label>
+                        <asp:Label ID="lbl_contrasena_usuario_banda" runat="server" Text="Contraseña:" Font-Bold="True"></asp:Label>
                         <asp:TextBox ID="txt_contrasena_usuario" runat="server" placeholder="Ingresa una contraseña" CssClass="form-control mb-3" TextMode="Password" ReadOnly="False"></asp:TextBox>
                     </div>
 
@@ -49,7 +49,7 @@
                         <asp:TextBox ID="txt_nombre_banda" runat="server" placeholder="Ej. Los Rolling" CssClass="form-control mb-3" ReadOnly="False"></asp:TextBox>
                         
                         <asp:Label ID="lbl_genero_banda" runat="server" Text="Género Musical:" Font-Bold="True"></asp:Label>
-                        <asp:TextBox ID="txt_genero_banda" runat="server" placeholder="Ej. Rock" CssClass="form-control mb-3" ReadOnly="False"></asp:TextBox>
+                        <asp:TextBox ID="txt_generos_banda" runat="server" placeholder="Ej. Rock" CssClass="form-control mb-3" ReadOnly="False"></asp:TextBox>
 
                         <asp:Label ID="lbl_slogan_banda" runat="server" Text="Eslogan de la Banda:" Font-Bold="True"></asp:Label>
                         <asp:TextBox ID="txt_slogan_banda" runat="server" placeholder="Ej. ¡Rockeando sin parar!" CssClass="form-control mb-3" ReadOnly="False"></asp:TextBox>
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="text-center mt-4">
-                    <asp:Button ID="btn_guardar" runat="server" Text="Guardar" CssClass="btn btn-primary" />
+                    <asp:Button ID="btn_crear_banda" runat="server" Text="Guardar" CssClass="btn btn-primary btn-block" OnClick="btn_crear_banda_Click" />
                     <asp:HyperLink ID="hl_banda" runat="server" NavigateUrl="~/RegistroUsuario.aspx" CssClass="btn btn-primary">Regitrarme como usuario</asp:HyperLink>
                 </div>
             </form>
