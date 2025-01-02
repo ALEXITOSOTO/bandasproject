@@ -11,7 +11,7 @@ namespace bandasproject
 {
 
 
-    public partial class Contact
+    public partial class RegistroBanda
     {
 
         /// <summary>
@@ -69,12 +69,48 @@ namespace bandasproject
         protected global::System.Web.UI.WebControls.TextBox txt_telefono_usuario;
 
         /// <summary>
-        /// Control btn_guardar_usuario.
+        /// Control lbl_nombre_banda.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_guardar_usuario;
+        protected global::System.Web.UI.WebControls.Label lbl_nombre_banda;
+
+        /// <summary>
+        /// Control txt_nombre_banda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_nombre_banda;
+
+        /// <summary>
+        /// Control lbl_genero_banda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_genero_banda;
+
+        /// <summary>
+        /// Control txt_genero_banda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_genero_banda;
+
+        /// <summary>
+        /// Control btn_guardar_banda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_guardar_banda;
     }
 }
