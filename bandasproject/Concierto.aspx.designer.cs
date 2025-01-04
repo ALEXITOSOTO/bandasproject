@@ -11,136 +11,142 @@ namespace bandasproject
 {
 
 
-    public partial class RegistroBanda
+    public partial class Concierto
     {
 
         /// <summary>
-        /// Control lbl_nombre_usuario.
+        /// Control lbl_nombre_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_nombre_usuario;
+        protected global::System.Web.UI.WebControls.Label lbl_nombre_concierto;
 
         /// <summary>
-        /// Control txt_nombre_usuario.
+        /// Control txt_nombre_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_nombre_usuario;
+        protected global::System.Web.UI.WebControls.TextBox txt_nombre_concierto;
 
         /// <summary>
-        /// Control lbl_email_usuario.
+        /// Control lbl_fecha_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_email_usuario;
+        protected global::System.Web.UI.WebControls.Label lbl_fecha_concierto;
 
         /// <summary>
-        /// Control txt_email_usuario.
+        /// Control txt_fecha_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_email_usuario;
+        protected global::System.Web.UI.WebControls.TextBox txt_fecha_concierto;
 
         /// <summary>
-        /// Control lbl_telefono_usuario.
+        /// Control lbl_hora_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_telefono_usuario;
+        protected global::System.Web.UI.WebControls.Label lbl_hora_concierto;
 
         /// <summary>
-        /// Control txt_telefono_usuario.
+        /// Control txt_hora_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_telefono_usuario;
+        protected global::System.Web.UI.WebControls.TextBox txt_hora_concierto;
 
         /// <summary>
-        /// Control lbl_nombre_banda.
+        /// Control lbl_lugar_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_nombre_banda;
+        protected global::System.Web.UI.WebControls.Label lbl_lugar_concierto;
 
         /// <summary>
-        /// Control txt_nombre_banda.
+        /// Control txt_lugar_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_nombre_banda;
+        protected global::System.Web.UI.WebControls.TextBox txt_lugar_concierto;
 
         /// <summary>
-        /// Control lbl_genero_banda.
+        /// Control lbl_precio_boleto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_genero_banda;
+        protected global::System.Web.UI.WebControls.Label lbl_precio_boleto;
 
         /// <summary>
-        /// Control txt_genero_banda.
+        /// Control txt_precio_boleto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_generos_banda;
+        protected global::System.Web.UI.WebControls.TextBox txt_precio_boleto;
 
         /// <summary>
-        /// Control btn_guardar_banda.
+        /// Control lbl_cantidad_boleto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-
-        protected global::System.Web.UI.WebControls.TextBox txt_contrasena_usuario;
+        protected global::System.Web.UI.WebControls.Label lbl_cantidad_boleto;
 
         /// <summary>
-        /// Control btn_guardar_banda.
+        /// Control txt_cantidad_boleto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-
-        protected global::System.Web.UI.WebControls.TextBox txt_slogan_banda;
-
-        /// <summary>
-        /// Control btn_guardar_banda.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        
-        protected global::System.Web.UI.WebControls.TextBox txt_numero_integrantes_banda;
+        protected global::System.Web.UI.WebControls.TextBox txt_cantidad_boleto;
 
         /// <summary>
-        /// Control btn_guardar_banda.
+        /// Control lbl_descripcion_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_guardar_banda;
+        protected global::System.Web.UI.WebControls.Label lbl_descripcion_concierto;
+
+        /// <summary>
+        /// Control txt_descripcion_concierto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_descripcion_concierto;
+
+        /// <summary>
+        /// Control btn_crear_concierto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_crear_concierto;
     }
 }

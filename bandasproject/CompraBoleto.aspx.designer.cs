@@ -11,61 +11,61 @@ namespace bandasproject
 {
 
 
-    public partial class _Default
+    public partial class CompraBoleto
     {
 
         /// <summary>
-        /// Control form1.
+        /// Control lbl_concierto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Label lbl_concierto;
 
         /// <summary>
-        /// Control lbl_usuario.
+        /// Control ddl_conciertos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_usuario;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_conciertos;
 
         /// <summary>
-        /// Control txt_usuario.
+        /// Control lbl_cantidad_boleto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_usuario;
+        protected global::System.Web.UI.WebControls.Label lbl_cantidad_boleto;
 
         /// <summary>
-        /// Control lbl_contrasena.
+        /// Control txt_cantidad_boleto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_contrasena;
+        protected global::System.Web.UI.WebControls.TextBox txt_cantidad_boleto;
 
         /// <summary>
-        /// Control txt_contrasena.
+        /// Control btn_comprar_boleto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_contrasena;
+        protected global::System.Web.UI.WebControls.Button btn_comprar_boleto;
 
         /// <summary>
-        /// Control btn_iniciar.
+        /// Control lbl_mensaje.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_iniciar;
+        protected global::System.Web.UI.WebControls.Label lbl_mensaje;
     }
 }

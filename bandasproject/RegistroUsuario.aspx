@@ -96,7 +96,6 @@
                 <div class="d-grid gap-2">
                     <asp:Button ID="btn_crear_usuario" runat="server" Text="Guardar" CssClass="btn btn-primary btn-block" OnClick="btn_crear_usuario_Click" />
                     <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Default.aspx" CssClass="btn btn-secondary btn-block">Volver</asp:HyperLink>
-                    <a class="btn btn-primary btn-block" runat="server" href="~/RegistroBanda">Registrarme como Banda</a>
                 </div>
             </form>
         </div>
