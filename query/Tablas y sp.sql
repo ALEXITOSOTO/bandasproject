@@ -144,6 +144,50 @@ BEGIN
     WHERE nombre_usuario = @nombre_usuario;
 END;
 
+/*Proceso almacenado para actualizar poerfil*/
+ALTER PROCEDURE sp_actualizar_perfil 
+    @id_usuario varchar(250),
+    @nombre_usuario varchar(250),
+    @email_usuario varchar(250),
+    @telefono varchar(50),
+    @estado_usuario varchar(100),
+    @nombre_banda varchar(250),
+    @generos_banda varchar(250),
+    @slogan_banda varchar(250),
+    @numero_integrantes_banda int
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Debug: Imprimir los valores recibidos
+    PRINT 'ID Usuario recibido: ' + ISNULL(@id_usuario, 'NULL');
+    
+    -- Verificar si el usuario existe antes de actualizar
+    IF NOT EXISTS (SELECT 1 FROM tblUsuario WHERE nombre_usuario = @id_usuario)
+    BEGIN
+        THROW 51000, 'Usuario no encontrado en la base de datos', 1;
+        RETURN;
+    END
+    
+    -- Actualizar datos del perfil del usuario
+    UPDATE tblUsuario
+    SET 
+        nombre_usuario = @nombre_usuario,
+        email_usuario = @email_usuario,
+        telefono_usuario = @telefono,
+        estado_usuario = @estado_usuario,
+        nombre_banda = @nombre_banda,
+        generos_banda = @generos_banda,
+        slogan_banda = @slogan_banda,
+        numero_integrantes_banda = @numero_integrantes_banda
+    WHERE nombre_usuario = @id_usuario;
+    
+    IF @@ROWCOUNT > 0
+        SELECT 'Actualización exitosa' as Resultado;
+    ELSE
+        THROW 51001, 'No se pudo actualizar el usuario', 1;
+END
+
 /* Proceso almcenado para crear canciones */
 select * from tblCancion;
 CREATE PROCEDURE sp_crear_cancion
