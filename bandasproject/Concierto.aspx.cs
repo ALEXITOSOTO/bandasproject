@@ -38,6 +38,10 @@ namespace bandasproject
 
         public void CrearConcierto(string nombre, DateTime fecha, string hora, string lugar, decimal precio, int cantidad, string descripcion)
         {
+            // Aquí puedes obtener el ID del usuario actual. 
+            // Si tienes un sistema de autenticación, obtén el ID del usuario que ha iniciado sesión.
+            int usuarioId = ObtenerUsuarioId(); // Asumimos que existe este método que devuelve el ID del usuario autenticado
+
             SqlCommand comandoInsercion = new SqlCommand("sp_crear_concierto", conexion);
             comandoInsercion.CommandType = CommandType.StoredProcedure;
 
@@ -48,6 +52,7 @@ namespace bandasproject
             comandoInsercion.Parameters.AddWithValue("@precio_boleto", precio);
             comandoInsercion.Parameters.AddWithValue("@cantidad_boleto", cantidad);
             comandoInsercion.Parameters.AddWithValue("@descripcion_concierto", descripcion);
+            comandoInsercion.Parameters.AddWithValue("@fk_id_usuario", usuarioId); // Asignamos el ID del usuario que está creando el concierto
 
             try
             {
@@ -62,6 +67,23 @@ namespace bandasproject
                 Response.Write($"<script>alert('Error al crear el concierto: {ex.Message}');</script>");
             }
         }
+
+        // Método para obtener el ID del usuario autenticado
+        private int ObtenerUsuarioId()
+        {
+            // Verificar si la sesión tiene el valor y si es un entero
+            if (Session["UsuarioLogueado"] != null && Session["UsuarioLogueado"] is int)
+            {
+                return (int)Session["UsuarioLogueado"];
+            }
+            else
+            {
+                // Si no hay sesión activa o el valor no es un entero, redirige al login
+                Response.Redirect("Default.aspx");
+                return -1; // O maneja de otra manera
+            }
+        }
+
         public void LimpiarCampos()
         {
             txt_nombre_concierto.Text = string.Empty;

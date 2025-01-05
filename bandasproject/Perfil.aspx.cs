@@ -26,40 +26,46 @@ namespace bandasproject
             }
             else
             {
-                
+                int usuarioId = (int)Session["UsuarioLogueado"]; // Usar el ID de usuario
+
                 if (!IsPostBack)
                 {
-                    string usuarioLogueado = Session["UsuarioLogueado"].ToString();
-                    CargarDatosPerfil(usuarioLogueado);
+                    CargarDatosPerfil(usuarioId);
                 }
             }
         }
 
-        public void CargarDatosPerfil(string nombreUsuario)
+        public void CargarDatosPerfil(int usuarioId)
         {
             SqlCommand comando = new SqlCommand("sp_ver_perfil", conexion);
             comando.CommandType = CommandType.StoredProcedure;
-            comando.Parameters.AddWithValue("@nombre_usuario", nombreUsuario);
+            comando.Parameters.AddWithValue("@id_usuario", usuarioId);  // Usar el ID del usuario
 
             try
             {
-                this.conexion.Open();
-                SqlDataReader reader = comando.ExecuteReader();
-
-                if (reader.Read())
+                using (this.conexion)
                 {
-                    txt_nombre_usuario.Text = reader["nombre_usuario"].ToString();
-                    txt_email_usuario.Text = reader["email_usuario"].ToString();
-                    txt_telefono_usuario.Text = reader["telefono_usuario"].ToString();
-                    txt_estado_usuario.Text = reader["estado_usuario"].ToString();
-                    txt_nombre_banda.Text = reader["nombre_banda"]?.ToString();
-                    txt_generos_banda.Text = reader["generos_banda"]?.ToString();
-                    txt_slogan_banda.Text = reader["slogan_banda"]?.ToString();
-                    txt_integrantes_banda.Text = reader["numero_integrantes_banda"]?.ToString();
+                    this.conexion.Open();
+                    using (SqlDataReader reader = comando.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Asignar los valores a los controles
+                            txt_nombre_usuario.Text = reader["nombre_usuario"].ToString();
+                            txt_email_usuario.Text = reader["email_usuario"].ToString();
+                            txt_telefono_usuario.Text = reader["telefono_usuario"].ToString();
+                            txt_estado_usuario.Text = reader["estado_usuario"].ToString();
+                            txt_nombre_banda.Text = reader["nombre_banda"]?.ToString();
+                            txt_generos_banda.Text = reader["generos_banda"]?.ToString();
+                            txt_slogan_banda.Text = reader["slogan_banda"]?.ToString();
+                            txt_integrantes_banda.Text = reader["numero_integrantes_banda"]?.ToString();
+                        }
+                        else
+                        {
+                            Response.Write("<script>alert('No se encontraron datos para este usuario.');</script>");
+                        }
+                    }
                 }
-
-                reader.Close();
-                this.conexion.Close();
             }
             catch (Exception ex)
             {
@@ -71,12 +77,10 @@ namespace bandasproject
         {
             try
             {
-                // Recoger los datos del formulario y hacer debug
-                string usuarioActual = Session["UsuarioLogueado"]?.ToString();
+                // Obtener el ID de usuario de la sesión (debe ser un entero)
+                int usuarioActual = (int)Session["UsuarioLogueado"];
 
-                Response.Write($"<script>console.log('Usuario en sesión: {usuarioActual}');</script>");
-
-                if (string.IsNullOrEmpty(usuarioActual))
+                if (usuarioActual == 0) // Si no existe un ID válido en sesión
                 {
                     Response.Write("<script>alert('No hay usuario en sesión');</script>");
                     return;
@@ -91,24 +95,10 @@ namespace bandasproject
                 string sloganBanda = txt_slogan_banda.Text;
                 string textoIntegrantes = txt_integrantes_banda.Text;
 
-                // Debug de todos los valores
-                string debugInfo = $@"
-            Usuario en sesión: {usuarioActual}
-            Nombre nuevo: {nombreUsuario}
-            Email: {emailUsuario}
-            Teléfono: {telefonoUsuario}
-            Estado: {estadoUsuario}
-            Banda: {nombreBanda}
-            Géneros: {generosBanda}
-            Slogan: {sloganBanda}
-            Integrantes: {textoIntegrantes}
-        ";
-                Response.Write($"<script>console.log(`{debugInfo}`);</script>");
-
                 int integrantesBanda;
                 if (!int.TryParse(textoIntegrantes, out integrantesBanda))
                 {
-                    Response.Write($"<script>alert('Error: El valor de integrantes no es válido');</script>");
+                    Response.Write("<script>alert('Error: El valor de integrantes no es válido');</script>");
                     return;
                 }
 
@@ -119,7 +109,7 @@ namespace bandasproject
                     {
                         comando.CommandType = CommandType.StoredProcedure;
 
-                        comando.Parameters.AddWithValue("@id_usuario", usuarioActual);
+                        comando.Parameters.AddWithValue("@id_usuario", usuarioActual);  // Usar el ID de usuario (int)
                         comando.Parameters.AddWithValue("@nombre_usuario", nombreUsuario);
                         comando.Parameters.AddWithValue("@email_usuario", emailUsuario);
                         comando.Parameters.AddWithValue("@telefono", telefonoUsuario);
@@ -132,12 +122,11 @@ namespace bandasproject
                         try
                         {
                             var result = comando.ExecuteNonQuery();
-                            Response.Write($"<script>console.log('Resultado de la actualización: {result}');</script>");
 
                             if (result > 0)
                             {
                                 Response.Write("<script>alert('Perfil actualizado correctamente');</script>");
-                                Response.Redirect(Request.RawUrl);
+                                Response.Redirect(Request.RawUrl);  // Recargar la página actual para ver los cambios
                             }
                             else
                             {

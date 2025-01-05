@@ -39,7 +39,7 @@ CREATE TABLE tblCancion(
 	fk_id_usuario INT,
 	FOREIGN KEY (fk_id_usuario) REFERENCES tblUsuario (id_usuario)
 );
-
+DROP TABLE tblConcierto;
 CREATE TABLE tblConcierto (
     id_concierto INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     nombre_concierto VARCHAR(250) NOT NULL,
@@ -48,17 +48,20 @@ CREATE TABLE tblConcierto (
     lugar_concierto VARCHAR(250) NOT NULL,  
     precio_boleto DECIMAL(10, 2) NOT NULL,  
     cantidad_boleto INT NOT NULL,           
-    descripcion_concierto TEXT NULL         
+    descripcion_concierto TEXT NULL ,
+	fk_id_usuario INT,
+	FOREIGN KEY (fk_id_usuario) REFERENCES tblUsuario (id_usuario)
 );
-
+DROP TABLE tblCompraBoleto;
 CREATE TABLE tblCompraBoleto(
     id_compra INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    id_usuario INT NOT NULL, 
-    id_concierto INT NOT NULL,
+    fk_id_usuario INT NOT NULL, 
+    fk_id_concierto INT NOT NULL,
     cantidad_boleto INT NOT NULL,
     fecha_compra DATE NOT NULL,
     estado_compra VARCHAR(50) NOT NULL,
-    FOREIGN KEY (id_concierto) REFERENCES tblConcierto(id_concierto)
+    FOREIGN KEY (fk_id_concierto) REFERENCES tblConcierto(id_concierto),
+	FOREIGN KEY (fk_id_usuario) REFERENCES tblUsuario (id_usuario)
 );
 
 /* Proceso almecnado para crear usuario */
@@ -67,9 +70,8 @@ CREATE PROCEDURE sp_crear_usuario_normal
 @email VARCHAR(250),
 @telefono VARCHAR(15),
 @contrasena VARCHAR(250)
-as
-begin insert into tblUsuario (nombre_usuario,email_usuario,telefono_usuario,contrasena_usuario,estado_usuario,rol_id)
-values(@nombre,@email,@telefono,@contrasena,'ACTIVO',2)end;
+AS BEGIN INSERT INTO tblUsuario (nombre_usuario,email_usuario,telefono_usuario,contrasena_usuario,estado_usuario,rol_id)
+VALUES(@nombre,@email,@telefono,@contrasena,'ACTIVO',2)end;
 
 DROP PROCEDURE sp_crear_usuario_normal;
 EXEC sp_crear_usuario_normal 
@@ -92,9 +94,7 @@ CREATE PROCEDURE sp_crear_usuario_banda
     @generos_banda TEXT, 
     @slogan_banda TEXT,
     @numero_integrantes_banda INT
-as
-begin
-insert into tblUsuario(nombre_usuario, email_usuario, telefono_usuario, contrasena_usuario, estado_usuario, rol_id, nombre_banda, 
+AS BEGIN INSERT INTO tblUsuario(nombre_usuario, email_usuario, telefono_usuario, contrasena_usuario, estado_usuario, rol_id, nombre_banda, 
 generos_banda, slogan_banda, numero_integrantes_banda) 
 values(@nombre,@email, @telefono, @contrasena, @estado, 3, @nombre_banda, @generos_banda, @slogan_banda, @numero_integrantes_banda)end;
 
@@ -113,22 +113,17 @@ select * from tblUsuario;
 
 /*Proceso Almacenado para el login */
 CREATE PROCEDURE sp_login
-    @nombre_usuario VARCHAR(250),
-    @contrasena_usuario VARCHAR(250)
-AS
-BEGIN
-    SELECT id_usuario, nombre_usuario, rol_id
-    FROM tblUsuario
-    WHERE nombre_usuario = @nombre_usuario 
-      AND contrasena_usuario = @contrasena_usuario
-      AND estado_usuario = 'ACTIVO';
+@nombre_usuario VARCHAR(250),
+@contrasena_usuario VARCHAR(250)
+AS BEGIN SELECT id_usuario, nombre_usuario, rol_id 
+FROM tblUsuario WHERE nombre_usuario = @nombre_usuario AND contrasena_usuario = @contrasena_usuario AND estado_usuario = 'ACTIVO';
 END;
 
 EXEC sp_login @nombre_usuario = 'Alexander Soto', @contrasena_usuario = 'alex123';
 
 /* Proceso almacenado para ver Perfil */
 CREATE PROCEDURE sp_ver_perfil
-    @nombre_usuario VARCHAR(250)
+    @id_usuario INT
 AS
 BEGIN
     SELECT 
@@ -141,35 +136,23 @@ BEGIN
         slogan_banda,
         numero_integrantes_banda
     FROM tblUsuario
-    WHERE nombre_usuario = @nombre_usuario;
-END;
+    WHERE id_usuario = @id_usuario;  -- Buscar por ID de usuario
+END
+
 
 /*Proceso almacenado para actualizar poerfil*/
-ALTER PROCEDURE sp_actualizar_perfil 
-    @id_usuario varchar(250),
-    @nombre_usuario varchar(250),
-    @email_usuario varchar(250),
-    @telefono varchar(50),
-    @estado_usuario varchar(100),
-    @nombre_banda varchar(250),
-    @generos_banda varchar(250),
-    @slogan_banda varchar(250),
-    @numero_integrantes_banda int
+CREATE PROCEDURE sp_actualizar_perfil
+    @id_usuario INT,
+    @nombre_usuario NVARCHAR(100),
+    @email_usuario NVARCHAR(100),
+    @telefono NVARCHAR(50),
+    @estado_usuario NVARCHAR(50),
+    @nombre_banda NVARCHAR(100) = NULL,
+    @generos_banda NVARCHAR(100) = NULL,
+    @slogan_banda NVARCHAR(100) = NULL,
+    @numero_integrantes_banda INT
 AS
 BEGIN
-    SET NOCOUNT ON;
-    
-    -- Debug: Imprimir los valores recibidos
-    PRINT 'ID Usuario recibido: ' + ISNULL(@id_usuario, 'NULL');
-    
-    -- Verificar si el usuario existe antes de actualizar
-    IF NOT EXISTS (SELECT 1 FROM tblUsuario WHERE nombre_usuario = @id_usuario)
-    BEGIN
-        THROW 51000, 'Usuario no encontrado en la base de datos', 1;
-        RETURN;
-    END
-    
-    -- Actualizar datos del perfil del usuario
     UPDATE tblUsuario
     SET 
         nombre_usuario = @nombre_usuario,
@@ -180,12 +163,7 @@ BEGIN
         generos_banda = @generos_banda,
         slogan_banda = @slogan_banda,
         numero_integrantes_banda = @numero_integrantes_banda
-    WHERE nombre_usuario = @id_usuario;
-    
-    IF @@ROWCOUNT > 0
-        SELECT 'Actualización exitosa' as Resultado;
-    ELSE
-        THROW 51001, 'No se pudo actualizar el usuario', 1;
+    WHERE id_usuario = @id_usuario;  -- Actualizar el usuario por ID
 END
 
 /* Proceso almcenado para crear canciones */
@@ -212,18 +190,16 @@ EXEC sp_crear_cancion
 /* Porceso almecnado para consultar las musicas */
 DROP PROCEDURE sp_consultar_cancion;
 CREATE PROCEDURE sp_consultar_cancion
-AS
-BEGIN
-    SET NOCOUNT ON;
-    SELECT id_cancion,
-           nombre_cancion,
-           descripcion_cancion,
-           autor_cancion,
-           portada_cancion,
-           archivo_cancion,
-           fk_id_usuario
-    FROM tblCancion
-    ORDER BY id_cancion DESC;
+AS BEGIN SET NOCOUNT ON;
+SELECT id_cancion,
+        nombre_cancion,
+        descripcion_cancion,
+        autor_cancion,
+        portada_cancion,
+        archivo_cancion,
+        fk_id_usuario
+FROM tblCancion
+ORDER BY id_cancion DESC;
 END
 
 /* Proceso almcenado para crear concierto */
@@ -234,13 +210,14 @@ CREATE PROCEDURE sp_crear_concierto
     @lugar_concierto VARCHAR(250),
     @precio_boleto DECIMAL(10, 2),
     @cantidad_boleto INT,
-    @descripcion_concierto TEXT
+    @descripcion_concierto TEXT,
+    @fk_id_usuario INT -- Este campo es el foráneo
 AS
 BEGIN
-    INSERT INTO tblConcierto (nombre_concierto, fecha_concierto, hora_concierto, lugar_concierto, precio_boleto, cantidad_boleto, descripcion_concierto)
-    VALUES (@nombre_concierto, @fecha_concierto, @hora_concierto, @lugar_concierto, @precio_boleto, @cantidad_boleto, @descripcion_concierto);
+    INSERT INTO tblConcierto (nombre_concierto, fecha_concierto, hora_concierto, lugar_concierto, precio_boleto, cantidad_boleto, descripcion_concierto, fk_id_usuario)
+    VALUES (@nombre_concierto, @fecha_concierto, @hora_concierto, @lugar_concierto, @precio_boleto, @cantidad_boleto, @descripcion_concierto, @fk_id_usuario);
 END
-        
+SELECT * FROM tblConcierto;
 /* Proceso almacenado para compra de boleto */
 CREATE PROCEDURE sp_registrar_compra_boleto
     @id_usuario INT,
@@ -250,8 +227,14 @@ CREATE PROCEDURE sp_registrar_compra_boleto
     @fecha_compra DATE
 AS
 BEGIN
-    INSERT INTO tblCompraBoleto(id_usuario, id_concierto, cantidad_boleto, fecha_compra, estado_compra)
-    VALUES (@id_usuario, @id_concierto, @cantidad_boleto, @fecha_compra, @estado_compra)
+    INSERT INTO tblCompraBoleto (fk_id_usuario, fk_id_concierto, cantidad_boleto, estado_compra, fecha_compra)
+    VALUES (@id_usuario, @id_concierto, @cantidad_boleto, @estado_compra, @fecha_compra);
+END
+/* Proceso almacenado para obtener los conciertos  */
+CREATE PROCEDURE sp_obtener_conciertos
+AS
+BEGIN
+    SELECT id_concierto, nombre_concierto FROM tblConcierto;
 END
 select * from tblCompraBoleto;
 

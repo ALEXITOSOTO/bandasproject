@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -29,7 +27,9 @@ namespace bandasproject
         // Método para cargar los conciertos disponibles en el dropdown
         private void CargarConciertos()
         {
-            SqlCommand comando = new SqlCommand("SELECT id_concierto, nombre_concierto FROM tblConcierto", conexion);
+            SqlCommand comando = new SqlCommand("sp_obtener_conciertos", conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+
             try
             {
                 conexion.Open();
@@ -54,7 +54,16 @@ namespace bandasproject
         {
             int idConcierto = int.Parse(ddl_conciertos.SelectedValue);
             int cantidadBoleto = int.Parse(txt_cantidad_boleto.Text);
-            int idUsuario = 1; // Asumimos que ya tienes un mecanismo de autenticación para obtener el ID del usuario logueado
+
+            // Obtener el ID de usuario de la sesión
+            int idUsuario = ObtenerUsuarioId();
+
+            if (idUsuario == -1)
+            {
+                Response.Redirect("Default.aspx");
+                return;
+            }
+
             string estadoCompra = "Pendiente"; // O "Pagado", dependiendo del flujo de tu aplicación
 
             // Registrar la compra en la base de datos
@@ -80,12 +89,34 @@ namespace bandasproject
                 conexion.Close();
 
                 lbl_mensaje.Text = "Compra realizada exitosamente. ¡Disfruta el concierto!";
+
+                LimpiarCampos();
             }
             catch (Exception ex)
             {
                 lbl_mensaje.Text = $"Error al realizar la compra: {ex.Message}";
                 lbl_mensaje.ForeColor = System.Drawing.Color.Red;
             }
+        }
+
+        // Método para obtener el ID del usuario autenticado desde la sesión
+        private int ObtenerUsuarioId()
+        {
+            if (Session["UsuarioLogueado"] != null && Session["UsuarioLogueado"] is int)
+            {
+                return (int)Session["UsuarioLogueado"];
+            }
+            else
+            {
+                // Si no hay sesión activa, redirigir a la página de login -dafault
+                return -1;
+            }
+        }
+
+        public void LimpiarCampos()
+        {
+            txt_cantidad_boleto.Text = string.Empty;
+            ddl_conciertos.SelectedIndex = 0;
         }
     }
 }

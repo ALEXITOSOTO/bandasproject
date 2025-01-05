@@ -20,7 +20,7 @@ namespace bandasproject
 
             if (!IsPostBack)
             {
-                
+
             }
         }
 
@@ -31,13 +31,36 @@ namespace bandasproject
 
             if (ValidarUsuario(usuario, contrasena))
             {
+                // Obtener el ID del usuario desde la base de datos
+                int usuarioId = ObtenerIdUsuarioDesdeDB(usuario);
+
+                // Guardar el ID de usuario en la sesión
+                Session["UsuarioLogueado"] = usuarioId;
+
+                // Guardar el nombre de usuario en la sesión si lo necesitas
+                Session["NombreUsuario"] = usuario;
+
                 Response.Redirect("Cancion.aspx");
             }
             else
             {
-                // Mostrar mensaje de error
                 Response.Write("<script>alert('Usuario o contraseña incorrectos');</script>");
             }
+        }
+
+        public int ObtenerIdUsuarioDesdeDB(string usuario)
+        {
+            int usuarioId = -1;
+            using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+            {
+                using (SqlCommand comando = new SqlCommand("SELECT id_usuario FROM tblUsuario WHERE nombre_usuario = @usuario", conexion))
+                {
+                    comando.Parameters.AddWithValue("@usuario", usuario);
+                    conexion.Open();
+                    usuarioId = (int)comando.ExecuteScalar();
+                }
+            }
+            return usuarioId;
         }
 
         public bool ValidarUsuario(string usuario, string contrasena)
@@ -76,6 +99,5 @@ namespace bandasproject
                 return false;
             }
         }
-
     }
 }
