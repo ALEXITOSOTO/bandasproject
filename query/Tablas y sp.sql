@@ -39,6 +39,7 @@ CREATE TABLE tblCancion(
 	fk_id_usuario INT,
 	FOREIGN KEY (fk_id_usuario) REFERENCES tblUsuario (id_usuario)
 );
+
 DROP TABLE tblConcierto;
 CREATE TABLE tblConcierto (
     id_concierto INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -187,6 +188,29 @@ EXEC sp_crear_cancion
     @archivo = 0x0,
     @id_usuario = 1;
 
+/* Proceso almacenado para eliminar cancion */
+CREATE PROCEDURE sp_eliminar_cancion
+    @id_cancion INT
+as begin delete from tblCancion where id_cancion = @id_cancion; end
+
+CREATE PROCEDURE sp_actualizar_cancion
+    @id_cancion INT,
+    @nombre VARCHAR(250),
+    @descripcion TEXT,
+    @autor TEXT,
+    @portada VARBINARY(MAX) = NULL,
+    @archivo VARBINARY(MAX) = NULL,
+    @id_usuario INT
+AS
+BEGIN UPDATE tblCancion
+    SET 
+        nombre_cancion = @nombre,
+        descripcion_cancion = @descripcion,
+        autor_cancion = @autor,
+        portada_cancion = ISNULL(@portada, portada_cancion),--Mantengo el archvo si es que es NULL
+        archivo_cancion = ISNULL(@archivo, archivo_cancion)  
+    WHERE id_cancion = @id_cancion AND fk_id_usuario = @id_usuario; END
+
 /* Porceso almecnado para consultar las musicas */
 DROP PROCEDURE sp_consultar_cancion;
 CREATE PROCEDURE sp_consultar_cancion
@@ -218,6 +242,28 @@ BEGIN
     VALUES (@nombre_concierto, @fecha_concierto, @hora_concierto, @lugar_concierto, @precio_boleto, @cantidad_boleto, @descripcion_concierto, @fk_id_usuario);
 END
 SELECT * FROM tblConcierto;
+/* Porceso almacenado para consulatr concierto*/
+CREATE PROCEDURE sp_consultar_conciertos
+AS
+BEGIN
+    SELECT 
+        id_concierto, 
+        nombre_concierto, 
+        fecha_concierto, 
+        hora_concierto, 
+        lugar_concierto, 
+        precio_boleto, 
+        cantidad_boleto, 
+        descripcion_concierto
+    FROM tblConcierto
+    ORDER BY fecha_concierto DESC;
+END
+
+/* Proceso almacenado para eliminar concierto */
+CREATE PROCEDURE sp_eliminar_concierto
+    @id_concierto INT
+as begin delete from tblConcierto where id_concierto = @id_concierto; end
+
 /* Proceso almacenado para compra de boleto */
 CREATE PROCEDURE sp_registrar_compra_boleto
     @id_usuario INT,

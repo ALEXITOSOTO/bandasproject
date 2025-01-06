@@ -27,7 +27,9 @@
                     <div class="music-info">
                         <h3><%# Eval("nombre_cancion") %></h3>
                         <p>Autor: <%# Eval("autor_cancion") %></p>
-                        <img src='<%# Eval("portada_cancion") %>' alt="Portada" class="music-cover"/>
+                        <asp:Image ID="imgPortada" runat="server" 
+           ImageUrl='<%# "data:image/png;base64," + Convert.ToBase64String((byte[])Eval("portada_cancion")) %>' 
+           CssClass="img-thumbnail" Width="100px" />
                     </div>
                 </div>
             </ItemTemplate>

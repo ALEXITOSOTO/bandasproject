@@ -33,13 +33,13 @@ namespace bandasproject
         protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
-        /// Control lblNombreDisco.
+        /// Control lblNombreCancion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombreDisco;
+        protected global::System.Web.UI.WebControls.Label lblNombreCancion;
 
         /// <summary>
         /// Control txt_nombre_cancion.
@@ -51,22 +51,22 @@ namespace bandasproject
         protected global::System.Web.UI.WebControls.TextBox txt_nombre_cancion;
 
         /// <summary>
-        /// Control rfvNombreDisco.
+        /// Control rfvNombreCancion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombreDisco;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombreCancion;
 
         /// <summary>
-        /// Control lblDescripcionDisco.
+        /// Control lblDescripcionCancion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDescripcionDisco;
+        protected global::System.Web.UI.WebControls.Label lblDescripcionCancion;
 
         /// <summary>
         /// Control txt_descripcion_cancion.
@@ -78,13 +78,13 @@ namespace bandasproject
         protected global::System.Web.UI.WebControls.TextBox txt_descripcion_cancion;
 
         /// <summary>
-        /// Control lblAutoresDisco.
+        /// Control lblAutoresCancion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAutoresDisco;
+        protected global::System.Web.UI.WebControls.Label lblAutoresCancion;
 
         /// <summary>
         /// Control txt_autor_cancion.
@@ -96,13 +96,13 @@ namespace bandasproject
         protected global::System.Web.UI.WebControls.TextBox txt_autor_cancion;
 
         /// <summary>
-        /// Control lblPortadaDisco.
+        /// Control lblPortadaCancion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPortadaDisco;
+        protected global::System.Web.UI.WebControls.Label lblPortadaCancion;
 
         /// <summary>
         /// Control fu_portada_cancion.
@@ -114,13 +114,13 @@ namespace bandasproject
         protected global::System.Web.UI.WebControls.FileUpload fu_portada_cancion;
 
         /// <summary>
-        /// Control lblArchivoDisco.
+        /// Control lblArchivoCancion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblArchivoDisco;
+        protected global::System.Web.UI.WebControls.Label lblArchivoCancion;
 
         /// <summary>
         /// Control fu_archivo_cancion.
@@ -148,5 +148,68 @@ namespace bandasproject
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink hlCancelar;
+
+        /// <summary>
+        /// Control hfEditIdCancion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfEditIdCancion;
+
+        /// <summary>
+        /// Control txtEditNombreCancion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEditNombreCancion;
+
+        /// <summary>
+        /// Control txtEditDescripcionCancion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEditDescripcionCancion;
+
+        /// <summary>
+        /// Control txtEditAutorCancion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEditAutorCancion;
+
+        /// <summary>
+        /// Control fuEditPortada.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuEditPortada;
+
+        /// <summary>
+        /// Control fuEditArchivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuEditArchivo;
+
+        /// <summary>
+        /// Control btnGuardarCambios.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGuardarCambios;
     }
 }

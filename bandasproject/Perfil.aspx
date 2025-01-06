@@ -9,7 +9,7 @@
                         <asp:TextBox ID="txt_nombre_usuario" runat="server" CssClass="form-control" BackColor="transparent" BorderColor="transparent" Font-Size="25pt" ForeColor="White"></asp:TextBox><br />
                     </div>
                     <asp:Image ID="Image1" runat="server" ImageUrl="https://fotografias.lasexta.com/clipping/cmsimages02/2019/11/14/66C024AF-E20B-49A5-8BC3-A21DD22B96E6/default.jpg?crop=1300,731,x0,y0&amp" Width="650px" BorderWidth="10px" CssClass="g-0" ImageAlign="Top" /><br />
-                    <asp:Button ID="btn_actualizar_usuario" OnClick="btn_actualizar_usuario_Click" runat="server" Text="Actualizar Datos" />
+                    <asp:Button ID="btn_actualizar_usuario" OnClick="btn_actualizar_usuario_Click" runat="server" Text="Actualizar Datos" CssClass="btn btn-primary" />
                 </div>
                 <br />
                 <div class="col-md-6">
