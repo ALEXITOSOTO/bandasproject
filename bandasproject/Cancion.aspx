@@ -4,7 +4,12 @@
         <div class="row">
             <!-- Lista de repertorios -->
             <div class="col-md-6">
-                <h3>Mis Repertorios</h3>
+
+                <h3 class="text-center">Mis Repertorios</h3>
+                
+                <div class="table table-responsive navbar-nav-scroll">
+                
+
                 <asp:GridView ID="grid_cancion" runat="server" CssClass="table table-bordered table-striped"
                     AutoGenerateColumns="False" DataKeyNames="id_cancion" 
                     OnRowDataBound="grid_cancion_RowDataBound" 
@@ -52,6 +57,7 @@
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
+                    </div>
             </div>
 
             <!-- Formulario para subir nueva música -->
@@ -136,6 +142,7 @@
     </div>
 
     <style>
+
         .login-div2 {
             color: white;
             background-image: linear-gradient(to right, #0a1175 0%, #034c8c 100%);

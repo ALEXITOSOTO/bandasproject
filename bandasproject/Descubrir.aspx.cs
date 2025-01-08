@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -17,9 +14,9 @@ namespace bandasproject
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Inicializar la cadena de conexión
-            cadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings["conexionbddBandas"].ConnectionString;
+            cadenaConexion = ConfigurationManager.ConnectionStrings["conexionbddBandas"].ConnectionString;
             conexion = new SqlConnection(cadenaConexion);
+
             if (!IsPostBack)
             {
                 CargarConciertos();
@@ -27,9 +24,23 @@ namespace bandasproject
             }
         }
 
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string terminoBusqueda = txtBusqueda.Text.Trim();
+            string tipoBusqueda = ddlTipoBusqueda.SelectedValue;
 
+            if (tipoBusqueda == "todos" || tipoBusqueda == "conciertos")
+            {
+                CargarConciertos(terminoBusqueda);
+            }
 
-        private void CargarConciertos()
+            if (tipoBusqueda == "todos" || tipoBusqueda == "musica")
+            {
+                CargarMusica(terminoBusqueda);
+            }
+        }
+
+        private void CargarConciertos(string filtro = "")
         {
             using (SqlConnection conexion = new SqlConnection(cadenaConexion))
             {
@@ -38,14 +49,15 @@ namespace bandasproject
                     using (SqlCommand cmd = new SqlCommand("sp_descubrir_concierto", conexion))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
+                        if (!string.IsNullOrEmpty(filtro))
+                        {
+                            cmd.Parameters.AddWithValue("@filtro", filtro);
+                        }
 
                         using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
                             adapter.Fill(dt);
-
-                            Response.Write($"<script>console.log('Filas recuperadas de sp_descubrir_concierto: {dt.Rows.Count}');</script>");
-
                             repeaterConciertos.DataSource = dt;
                             repeaterConciertos.DataBind();
                         }
@@ -54,12 +66,11 @@ namespace bandasproject
                 catch (Exception ex)
                 {
                     Response.Write($"<script>console.log('Error en CargarConciertos: {ex.Message}');</script>");
-                    Response.Write($"<script>alert('Error al cargar conciertos: {ex.Message}');</script>");
                 }
             }
         }
 
-        private void CargarMusica()
+        private void CargarMusica(string filtro = "")
         {
             using (SqlConnection conexion = new SqlConnection(cadenaConexion))
             {
@@ -68,14 +79,15 @@ namespace bandasproject
                     using (SqlCommand cmd = new SqlCommand("sp_descubrir_cancion", conexion))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
+                        if (!string.IsNullOrEmpty(filtro))
+                        {
+                            cmd.Parameters.AddWithValue("@filtro", filtro);
+                        }
 
                         using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
                             adapter.Fill(dt);
-
-                            Response.Write($"<script>console.log('Filas recuperadas de sp_descubrir_cancion: {dt.Rows.Count}');</script>");
-
                             repeaterMusica.DataSource = dt;
                             repeaterMusica.DataBind();
                         }
@@ -84,7 +96,6 @@ namespace bandasproject
                 catch (Exception ex)
                 {
                     Response.Write($"<script>console.log('Error en CargarMusica: {ex.Message}');</script>");
-                    Response.Write($"<script>alert('Error al cargar música: {ex.Message}');</script>");
                 }
             }
         }
