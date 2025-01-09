@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
             <div class="row">
                 <div class="col-md-6">
+                    
                     <div class="login-div">
                         <div class="login-div2">
                             <h1>Crear Nuevo Concierto</h1>
@@ -28,11 +29,12 @@
 
                             <asp:Button ID="btn_crear_concierto" runat="server" Text="Crear Concierto" CssClass="btn btn-primary" OnClick="btn_crear_concierto_Click" />
                         </div>
+                    
                     </div>
                 </div>
 
                 <div class="col-md-6">
-
+                    <div class="table table-responsive navbar-nav-scroll">
                     <asp:GridView ID="grid_concierto" runat="server" CssClass="table table-bordered table-striped"
                         AutoGenerateColumns="False" DataKeyNames="id_concierto" OnRowDataBound="grid_concierto_RowDataBound">
                         <Columns>
@@ -58,6 +60,7 @@
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
+                </div>
                 </div>
             </div>
 
