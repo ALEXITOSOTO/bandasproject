@@ -54,17 +54,19 @@ namespace bandasproject
         {
             if (e.CommandName == "Eliminar")
             {
-                // Obtener el ID del concierto desde el CommandArgument
                 int idConcierto = Convert.ToInt32(e.CommandArgument);
-
-                // Llamar al método para eliminar el concierto
                 EliminarConciertoBDD(idConcierto);
-
-                // Recargar los conciertos después de la eliminación
                 CargarConciertos();
-                grid_concierto.DataBind(); // Asegurarse de que los datos se actualizan
+            }
+            else if (e.CommandName == "Editar")
+            {
+                int idConcierto = Convert.ToInt32(e.CommandArgument);
+                CargarDatosConcierto(idConcierto);
+                ScriptManager.RegisterStartupScript(this, GetType(), "showModal",
+                    "$('#editModal').modal('show');", true);
             }
         }
+
         private void EliminarConciertoBDD(int idConcierto)
         {
             using (SqlCommand comandoEliminar = new SqlCommand("sp_eliminar_concierto", conexion))
@@ -163,6 +165,42 @@ namespace bandasproject
                 Response.Write($"<script>alert('Error al cargar los conciertos: {ex.Message}');</script>");
             }
         }
+        private void CargarDatosConcierto(int idConcierto)
+        {
+            using (SqlCommand cmd = new SqlCommand("sp_obtener_concierto", conexion))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id_concierto", idConcierto);
+
+                try
+                {
+                    conexion.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            hfEditIdConcierto.Value = idConcierto.ToString();
+                            txtEditNombreConcierto.Text = reader["nombre_concierto"].ToString();
+                            txtEditFechaConcierto.Text = Convert.ToDateTime(reader["fecha_concierto"]).ToString("yyyy-MM-dd");
+                            txtEditHoraConcierto.Text = reader["hora_concierto"].ToString();
+                            txtEditLugarConcierto.Text = reader["lugar_concierto"].ToString();
+                            txtEditPrecioBoleto.Text = reader["precio_boleto"].ToString();
+                            txtEditCantidadBoleto.Text = reader["cantidad_boleto"].ToString();
+                            txtEditDescripcionConcierto.Text = reader["descripcion_concierto"].ToString();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Response.Write($"<script>alert('Error al cargar los datos del concierto: {ex.Message}');</script>");
+                }
+                finally
+                {
+                    if (conexion.State == ConnectionState.Open)
+                        conexion.Close();
+                }
+            }
+        }
         private int ObtenerUsuarioId()
         {
             if (Session["UsuarioLogueado"] != null && Session["UsuarioLogueado"] is int)
@@ -185,6 +223,45 @@ namespace bandasproject
             txt_precio_boleto.Text = string.Empty;
             txt_cantidad_boleto.Text = string.Empty;
             txt_descripcion_concierto.Text = string.Empty;
+        }
+        protected void btn_actualizar_concierto_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idConcierto = int.Parse(hfEditIdConcierto.Value);
+                DateTime fechaConcierto = DateTime.Parse(txtEditFechaConcierto.Text);
+                decimal precioBoleto = decimal.Parse(txtEditPrecioBoleto.Text);
+                int cantidadBoleto = int.Parse(txtEditCantidadBoleto.Text);
+
+                using (SqlCommand cmd = new SqlCommand("sp_actualizar_concierto", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@id_concierto", idConcierto);
+                    cmd.Parameters.AddWithValue("@nombre_concierto", txtEditNombreConcierto.Text);
+                    cmd.Parameters.AddWithValue("@fecha_concierto", fechaConcierto);
+                    cmd.Parameters.AddWithValue("@hora_concierto", txtEditHoraConcierto.Text);
+                    cmd.Parameters.AddWithValue("@lugar_concierto", txtEditLugarConcierto.Text);
+                    cmd.Parameters.AddWithValue("@precio_boleto", precioBoleto);
+                    cmd.Parameters.AddWithValue("@cantidad_boleto", cantidadBoleto);
+                    cmd.Parameters.AddWithValue("@descripcion_concierto", txtEditDescripcionConcierto.Text);
+
+                    conexion.Open();
+                    cmd.ExecuteNonQuery();
+                    conexion.Close();
+
+                    CargarConciertos();
+                    Response.Write("<script>alert('Concierto actualizado exitosamente');</script>");
+
+                    // Cerrar el modal usando JavaScript
+                    ScriptManager.RegisterStartupScript(this, GetType(), "closeModal",
+                        "$('#editModal').modal('hide');", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write($"<script>alert('Error al actualizar el concierto: {ex.Message}');</script>");
+            }
         }
     }
 }
